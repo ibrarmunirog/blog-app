@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from './user/user.module';
-import applicationConfig from 'src/config/application';
+import { UserModule } from 'src/user/user.module';
+import { AuthModule } from 'src/auth/auth.module';
+import { applicationConfig } from 'src/config/application';
+import { AccessTokenStrategy, RefreshTokenStrategy } from 'src/auth/strategies';
 
 @Module({
   imports: [
@@ -20,18 +20,19 @@ import applicationConfig from 'src/config/application';
         database: configService.get('application.database.databaseName'),
         autoLoadEntities: true,
         migrationsTableName: 'migration',
-        migrations: [__dirname + '/migrations/*{.ts,.js}'],
-        logging: true,
+        migrations: ['dist/migrations/**/*.js'],
+        logging: false,
         cli: {
           migrationsDir: 'src/migration',
         },
-        synchronize: false
+        synchronize: false,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     UserModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [AccessTokenStrategy, RefreshTokenStrategy],
 })
 export class AppModule {}

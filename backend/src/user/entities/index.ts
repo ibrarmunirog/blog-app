@@ -1,0 +1,1 @@
+export * from 'src/user/entities/user.entity'
