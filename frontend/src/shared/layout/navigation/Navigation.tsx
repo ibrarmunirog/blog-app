@@ -9,6 +9,9 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import logoSrc from "assets/images/logo.png";
 import { LoginButton, RegisterButton } from "./navigation.styles";
 import { colors, fontWeights } from "styles/vars";
+import { useSelector } from "react-redux";
+import { authSelector } from "modules/auth";
+import { UserAvatarMenu } from "shared/components";
 
 const linkItemStyles = {
   fontWeight: fontWeights.fontMedium,
@@ -27,7 +30,18 @@ const bottomNavigationStyles = {
 };
 
 export const Navigation = () => {
+  const { user } = useSelector(authSelector);
   const [value, setValue] = useState(0);
+
+  const navbarRightElement = user ? (
+    <UserAvatarMenu />
+  ) : (
+    <Stack spacing={2} direction="row">
+      <LoginButton to="/login">Login</LoginButton>
+      <RegisterButton to="/register">Register</RegisterButton>
+    </Stack>
+  );
+
   return (
     <Box>
       <AppBar
@@ -72,10 +86,7 @@ export const Navigation = () => {
               />
             </BottomNavigation>
             <Box sx={{ flexGrow: 1 }} />
-            <Stack spacing={2} direction="row">
-              <LoginButton to="/login">Login</LoginButton>
-              <RegisterButton to="/register">Register</RegisterButton>
-            </Stack>
+            {navbarRightElement}
           </Toolbar>
         </Container>
       </AppBar>

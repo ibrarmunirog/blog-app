@@ -1,4 +1,4 @@
-import Alert, { AlertColor, AlertProps } from "@mui/material/Alert";
+import Alert, { AlertColor } from "@mui/material/Alert";
 import Snackbar, { SnackbarProps } from "@mui/material/Snackbar";
 
 export interface IToastAlert extends SnackbarProps {
@@ -21,7 +21,7 @@ export const ToastAlert: React.FC<IToastAlert> = ({
         vertical: "top",
         horizontal: "right",
       }}
-      autoHideDuration={2000}
+      autoHideDuration={6000}
       onClose={onClose}
     >
       <Alert severity={severity} sx={{ width: "100%" }} onClose={onClose}>

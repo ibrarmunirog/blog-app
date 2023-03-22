@@ -3,9 +3,6 @@ import {
   Inject,
   Injectable,
   UnauthorizedException,
-  HttpException,
-  HttpStatus,
-  UnprocessableEntityException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
@@ -98,6 +95,8 @@ export class AuthService {
       {
         id: user.id,
         email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
       },
       options,
     );
