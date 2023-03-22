@@ -68,6 +68,7 @@ export const CustomTextField = styled(TextField)({
     marginTop: "0px",
     marginLeft: "15px",
     fontWeight: 500,
-    fontSize: "13px",
+    fontSize: "14px",
+    color: `${colors.error} !important`,
   },
 });
