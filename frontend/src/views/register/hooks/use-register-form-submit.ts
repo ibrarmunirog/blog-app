@@ -3,6 +3,8 @@ import { FormikHelpers } from "formik";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "redux/store";
 import { registerAction } from "modules/auth";
+import { useNavigate } from "react-router-dom";
+import { HOME_ROUTE } from "shared/constants";
 
 const initialValues: IRegisterFormInitialValues = {
   firstName: "",
@@ -22,15 +24,20 @@ interface IUseRegisterFormSubmit {
 
 export const useRegisterFormSubmit = (): IUseRegisterFormSubmit => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const onSubmit = async (
     values: IRegisterFormInitialValues,
     { setSubmitting }: FormikHelpers<IRegisterFormInitialValues>
   ) => {
-    console.log(values, "hhdhhdh");
     const result = await dispatch(registerAction(values));
 
     if (result.type === registerAction.rejected.toString()) {
       setSubmitting(false);
+    }
+
+    if (result.type === registerAction.fulfilled.toString()) {
+      navigate(HOME_ROUTE);
     }
   };
 

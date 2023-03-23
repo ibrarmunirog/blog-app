@@ -1,5 +1,10 @@
 import { ILoginFormInitialValues } from "views/login/interfaces";
 import { FormikHelpers } from "formik";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "redux/store";
+import { loginAction } from "modules/auth";
+import { useNavigate } from "react-router-dom";
+import { HOME_ROUTE } from "shared/constants";
 
 const initialValues: ILoginFormInitialValues = {
   email: "",
@@ -15,11 +20,21 @@ interface IUseLoginFormSubmit {
 }
 
 export const useLoginFormSubmit = (): IUseLoginFormSubmit => {
-  const onSubmit = (
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const onSubmit = async (
     values: ILoginFormInitialValues,
-    actions: FormikHelpers<ILoginFormInitialValues>
+    { setSubmitting }: FormikHelpers<ILoginFormInitialValues>
   ) => {
-    console.log(values, "hhh");
+    const result = await dispatch(loginAction(values));
+
+    if (result.type === loginAction.rejected.toString()) {
+      setSubmitting(false);
+    }
+
+    if (result.type === loginAction.fulfilled.toString()) {
+      navigate(HOME_ROUTE);
+    }
   };
   return {
     initialValues,

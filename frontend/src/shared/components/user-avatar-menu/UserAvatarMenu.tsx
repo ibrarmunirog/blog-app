@@ -6,12 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import EditIcon from "@mui/icons-material/Edit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "modules/auth";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "redux/store";
+import { logoutUser } from "modules/auth/auth.slice";
 
 export const UserAvatarMenu = () => {
   const { user } = useSelector(authSelector);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -24,6 +27,10 @@ export const UserAvatarMenu = () => {
 
   const handleProfileClick = () => {
     navigate("/profile");
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -84,7 +91,7 @@ export const UserAvatarMenu = () => {
           </ListItemIcon>
           Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

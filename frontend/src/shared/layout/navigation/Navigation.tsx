@@ -12,6 +12,8 @@ import { colors, fontWeights } from "styles/vars";
 import { useSelector } from "react-redux";
 import { authSelector } from "modules/auth";
 import { UserAvatarMenu } from "shared/components";
+import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE } from "shared/constants";
+import { Link } from "react-router-dom";
 
 const linkItemStyles = {
   fontWeight: fontWeights.fontMedium,
@@ -37,8 +39,8 @@ export const Navigation = () => {
     <UserAvatarMenu />
   ) : (
     <Stack spacing={2} direction="row">
-      <LoginButton to="/login">Login</LoginButton>
-      <RegisterButton to="/register">Register</RegisterButton>
+      <LoginButton to={LOGIN_ROUTE}>Login</LoginButton>
+      <RegisterButton to={REGISTER_ROUTE}>Register</RegisterButton>
     </Stack>
   );
 
@@ -52,17 +54,18 @@ export const Navigation = () => {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Box
-              component="img"
-              sx={{
-                height: 40,
-                width: 220,
-                objectFit: "contain",
-                maxWidth: { xs: 350, md: 250 },
-              }}
-              alt="The Logo"
-              src={logoSrc}
-            />
+            <Link to={HOME_ROUTE}>
+              <Box
+                component="img"
+                sx={{
+                  height: 30,
+                  width: 120,
+                  objectFit: "contain",
+                }}
+                alt="The Logo"
+                src={logoSrc}
+              />
+            </Link>
             <BottomNavigation
               sx={{ gap: { md: "44px" } }}
               showLabels

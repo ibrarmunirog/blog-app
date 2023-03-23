@@ -14,7 +14,15 @@ export const LoginForm = () => {
   const { showPassword, handleClickShowPassword, handleMouseDownPassword } =
     usePassword();
   const { initialValues, onSubmit } = useLoginFormSubmit();
-  const { handleSubmit, getFieldProps, errors, touched } = useFormik({
+  const {
+    handleSubmit,
+    getFieldProps,
+    errors,
+    touched,
+    isValid,
+    isSubmitting,
+    dirty,
+  } = useFormik({
     initialValues,
     validationSchema: loginFormSchema,
     onSubmit,
@@ -66,6 +74,7 @@ export const LoginForm = () => {
         variant="contained"
         fullWidth
         sx={{ marginBottom: { xs: "13px", md: "28px" } }}
+        disabled={!(isValid && dirty) || isSubmitting}
       >
         Submit
       </GradientButton>
